@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELEVATE | Cart</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div id="loader"><div class="loader-text">ELEV<span class="accent">A</span>TE.</div></div>
+
+  <nav class="navbar" role="navigation">
+    <a href="index.html" class="logo">ELEVATE.</a>
+    <div class="dynamic-search-container">
+      <input type="text" id="dynamic-search-input" class="dynamic-search-input" placeholder="Search the Exclusive Global Collection..." />
+      <button class="search-icon-btn"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links"><a href="shop.html">Collection</a></div>
+    <div class="nav-icons">
+      <a href="login.html"><i class="far fa-user"></i></a>
+      <div class="cart-btn"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></div>
+      <button id="dark-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <main class="main-content" style="padding:48px 4%;">
+    <div id="cart-root" class="container" style="max-width:var(--container);margin:0 auto;">
+  
+      <h1>Your Bag</h1>
+      <p class="muted">Loading items…</p>
+    </div>
+
+    <div style="max-width:var(--container);margin:28px auto 0;">
+      <a href="checkout.html" class="btn primary large">Proceed to Checkout</a>
+    </div>
+  </main>
+
+  <footer style="margin-top:60px;">
+    <div class="footer-bottom-bar">
+      <div>&copy; <span id="current-year">2025</span> ELEVATE Global Corp.</div>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELEVATE | Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div id="loader"><div class="loader-text">ELEV<span class="accent">A</span>TE.</div></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">ELEVATE.</a>
+    <div class="nav-links"><a href="shop.html">Collection</a></div>
+    <div class="nav-icons">
+      <div class="cart-btn"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></div>
+      <button id="dark-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <main class="main-content" style="padding:60px 4%;">
+    <div style="max-width:420px;margin:0 auto;background:#fff;padding:28px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);">
+      <h2>Sign In</h2>
+      <form id="login-form" style="margin-top:12px;">
+        <label>Email</label>
+        <input type="email" name="email" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+        <label>Password</label>
+        <input type="password" name="password" required style="width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:1px solid #eee" />
+        <button class="btn primary" type="submit">Sign In (Mock)</button>
+      </form>
+
+      <div style="margin-top:14px">
+        <p style="margin-bottom:8px;">Or</p>
+  
+        <button class="btn outline" id="mock-google"><i class="fab fa-google"></i> Sign in with Google (Mock)</button>
+
+     
+      </div>
+    </div>
+  </main>
+
+  <footer style="margin-top:60px;">
+    <div class="footer-bottom-bar">
+      <div>&copy; <span id="current-year">2025</span> ELEVATE Global Corp.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script>
+   
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const f = document.getElementById('login-form');
+      f.addEventListener('submit', e=>{
+        e.preventDefault();
+        alert('Mock sign-in successful (no backend).');
+        window.location.href = 'index.html';
+      });
+      document.getElementById('mock-google').addEventListener('click', ()=>{
+        alert('Mock Google sign-in (UI-only). To enable real Google Sign-In add OAuth client and server integration.)');
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+</body>
+</html>

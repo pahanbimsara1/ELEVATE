@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELEVATE | My Orders</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+
+    .status {padding:6px 12px;border-radius:20px;font-weight:700;font-size:0.8rem;}
+    .status.processing {background:#fff7e6;color:#b76e00;}
+    .status.shipped {background:#e6f3ff;color:#005bbb;}
+    .status.transit {background:#e9f7ef;color:#217a39;}
+    .status.delivered {background:#e8fff1;color:#1c7c36;}
+    .status.cancelled {background:#ffe6e6;color:#b00020;}
+
+   
+    .tracking-panel {display:none;padding:20px;border:1px solid #eee;border-radius:14px;margin-top:12px;background:#fff;}
+    .tracking-step {padding:10px 0;display:flex;gap:12px;align-items:flex-start;}
+    .tracking-step i {font-size:1.2rem;width:22px;text-align:center;}
+    .tracking-step.completed i {color:#1c7c36;}
+    .tracking-step.pending i {color:#999;}
+
+    .orders-card {background:#fff;padding:20px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);margin-bottom:20px;box-shadow:var(--shadow-soft);}
+    .orders-items {display:flex;gap:12px;margin-top:12px;}
+    .orders-items img {width:70px;height:70px;object-fit:cover;border-radius:10px;}
+  </style>
+</head>
+
+<body>
+  <div id="loader"><div class="loader-text">ELEV<span class="accent">A</span>TE.</div></div>
+
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">ELEVATE.</a>
+    <div class="nav-links">
+      <a href="shop.html">Collection</a>
+      <a href="orders.html" class="active">My Orders</a>
+    </div>
+
+    <div class="nav-icons">
+      <a href="login.html"><i class="far fa-user"></i></a>
+      <div class="cart-btn" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <button id="dark-toggle" class="icon-btn">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content" style="padding:48px 4%;">
+    <div class="container" style="max-width:var(--container);margin:0 auto;">
+      <h1>My Orders</h1>
+      <p class="muted">Track & manage your purchases.</p>
+      <div id="orders-container" style="margin-top:24px;"></div>
+    </div>
+  </main>
+
+
+  <footer style="margin-top:60px;">
+    <div class="footer-bottom-bar">
+      <div>&copy; <span id="current-year">2025</span> ELEVATE Global Corp.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script>
+
+    function loadOrders() {
+      let orders = JSON.parse(localStorage.getItem("elevate_orders") || "[]");
+
+
+      if (orders.length === 0) {
+        orders = generateDemoOrders();
+        localStorage.setItem("elevate_orders", JSON.stringify(orders));
+      }
+
+      renderOrders(orders);
+    }
+
+    function generateDemoOrders() {
+      const sample = [
+        {
+          id: "ORD-923712",
+          date: "2025-01-08",
+          total: 349.99,
+          status: "Shipped",
+          tracking: ["Order Received", "Processing", "Shipped"],
+          items: [
+            { name: "AeroPulse Headphones", img: "assets/p1.jpg" },
+            { name: "QuantumSmart Watch", img: "assets/p2.jpg" }
+          ]
+        },
+        {
+          id: "ORD-923699",
+          date: "2025-01-03",
+          total: 1299.00,
+          status: "Delivered",
+          tracking: ["Order Received", "Processing", "Shipped", "In Transit", "Delivered"],
+          items: [
+            { name: "Nebula 8K Camera", img: "assets/p3.jpg" }
+          ]
+        }
+      ];
+      return sample;
+    }
+
+    function renderOrders(orders) {
+      const container = document.getElementById("orders-container");
+      container.innerHTML = "";
+
+      if (orders.length === 0) {
+        container.innerHTML = `<p class="muted">No orders found.</p>`;
+        return;
+      }
+
+      orders.forEach(order => {
+        const card = document.createElement("div");
+        card.className = "orders-card";
+
+        card.innerHTML = `
+          <div style="display:flex;justify-content:space-between;">
+            <div>
+              <h3>Order #${order.id}</h3>
+              <p class="muted">Placed on: ${order.date}</p>
+            </div>
+            <div class="status ${order.status.toLowerCase().replace(" ", "")}">${order.status}</div>
+          </div>
+
+          <div class="orders-items">
+            ${order.items.map(i => `
+              <img src="${i.img}" alt="${i.name}" />
+            `).join("")}
+          </div>
+
+          <p style="margin-top:10px;"><strong>Total:</strong> $${order.total}</p>
+
+          <button class="btn outline" style="margin-top:12px;" onclick="toggleTracking('${order.id}')">
+            Track Order
+          </button>
+
+          <div class="tracking-panel" id="track-${order.id}">
+            ${renderTrackingSteps(order.tracking)}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderTrackingSteps(steps) {
+      const allSteps = ["Order Received", "Processing", "Shipped", "In Transit", "Delivered"];
+
+      return allSteps
+        .map(step => {
+          const completed = steps.includes(step);
+          return `
+            <div class="tracking-step ${completed ? "completed" : "pending"}">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>${step}</strong>
+                <p class="muted" style="font-size:0.85rem;">
+                  ${completed ? "Completed" : "Pending"}
+                </p>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function toggleTracking(id) {
+      const panel = document.getElementById("track-" + id);
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrders);
+  </script>
+</body>
+</html>

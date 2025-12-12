@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELEVATE | Checkout</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div id="loader"><div class="loader-text">ELEV<span class="accent">A</span>TE.</div></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">ELEVATE.</a>
+    <div class="dynamic-search-container">
+      <input type="text" id="dynamic-search-input" class="dynamic-search-input" placeholder="Search the Exclusive Global Collection..." />
+      <button class="search-icon-btn"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-links"><a href="shop.html">Collection</a></div>
+    <div class="nav-icons">
+      <a href="login.html"><i class="far fa-user"></i></a>
+      <div class="cart-btn"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></div>
+      <button id="dark-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <main class="main-content" style="padding:48px 4%;">
+    <div class="container" style="max-width:var(--container);margin:0 auto;">
+      <h1>Checkout</h1>
+      <div class="checkout-grid" style="display:grid;grid-template-columns:1fr 420px;gap:28px;">
+     
+        <form id="checkout-form" style="background:#fff;padding:22px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);">
+          <h3>Billing & Shipping</h3>
+          <label>Full Name</label>
+          <input name="fullName" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+          <label>Address Line 1</label>
+          <input name="addr1" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+          <label>Address Line 2 <small class="muted">(optional)</small></label>
+          <input name="addr2" style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label>City</label>
+              <input name="city" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee" />
+            </div>
+            <div>
+              <label>ZIP / Postcode</label>
+              <input name="zip" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee" />
+            </div>
+          </div>
+
+          <label style="margin-top:12px;">Country</label>
+          <input name="country" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+
+          <label>Phone</label>
+          <input name="phone" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+
+          <label>Email</label>
+          <input type="email" name="email" required style="width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:1px solid #eee" />
+
+          <h4 style="margin-top:8px;">Payment (Mock)</h4>
+          <label>Card Number</label>
+          <input name="cardNumber" placeholder="4242 4242 4242 4242" required style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #eee" />
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;">
+            <div>
+              <label>Expiry (MM/YY)</label>
+              <input name="expiry" placeholder="MM/YY" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee" />
+            </div>
+            <div>
+              <label>CVV</label>
+              <input name="cvv" placeholder="123" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee" />
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <button type="submit" class="btn primary large">Complete Purchase (Mock)</button>
+          </div>
+        </form>
+
+      
+        <aside style="background:#fff;padding:22px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);">
+          <h3>Order Summary</h3>
+          <div id="checkout-summary">
+            <p class="muted">Cart summary will show here (cart stored in localStorage).</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer style="margin-top:60px;">
+    <div class="footer-bottom-bar">
+      <div>&copy; <span id="current-year">2025</span> ELEVATE Global Corp.</div>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script>
+   
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const form = document.getElementById('checkout-form');
+      const summary = document.getElementById('checkout-summary');
+      const cart = JSON.parse(localStorage.getItem('elevate_cart')||'[]');
+      const subtotal = cart.reduce((s,i)=>s + (i.qty||1)*i.price,0);
+      summary.innerHTML = cart.length ? `<div><strong>Items:</strong> ${cart.length}</div><div style="margin-top:8px">Subtotal: <strong>${new Intl.NumberFormat(undefined,{style:'currency',currency:'USD'}).format(subtotal)}</strong></div>` : '<p class="muted">Your cart is empty.</p>';
+
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        const data = new FormData(form);
+        if(!data.get('fullName') || !data.get('email')) { alert('Please fill required fields'); return; }
+  
+        alert('Mock purchase complete. This is a demo — no real payment processed.');
+        localStorage.removeItem('elevate_cart');
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+</body>
+</html>

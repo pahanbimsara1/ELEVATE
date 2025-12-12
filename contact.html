@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELEVATE | Contact</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+ 
+    .chat-wrap{position:fixed;right:28px;bottom:28px;width:360px;max-width:calc(100% - 48px);z-index:1500}
+    .chat-panel{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid rgba(2,6,23,0.06);box-shadow:0 12px 40px rgba(2,6,23,0.08);overflow:hidden}
+    .chat-header{padding:12px 14px;font-weight:800;display:flex;align-items:center;gap:10px}
+    .chat-body{height:280px;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+    .chat-input{display:flex;padding:12px;border-top:1px solid rgba(2,6,23,0.04);gap:8px}
+    .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid #eee}
+    .message{max-width:80%;padding:10px;border-radius:10px}
+    .message.me{align-self:flex-end;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+    .message.them{align-self:flex-start;background:#f2f6ff;color:var(--text-main)}
+  </style>
+</head>
+<body>
+  <div id="loader"><div class="loader-text">ELEV<span class="accent">A</span>TE.</div></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">ELEVATE.</a>
+    <div class="nav-links"><a href="shop.html">Collection</a></div>
+    <div class="nav-icons">
+      <div class="cart-btn"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></div>
+      <button id="dark-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <main class="main-content" style="padding:48px 4%;">
+    <div class="container" style="max-width:var(--container);margin:0 auto;">
+      <h1>Contact Us</h1>
+      <p class="muted">Prefer live chat? Use the widget at bottom-right. For formal inquiries fill the form below.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:18px;">
+        <form style="background:#fff;padding:20px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);">
+          <label>Name</label>
+          <input style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-bottom:10px" />
+          <label>Email</label>
+          <input style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-bottom:10px" />
+          <label>Message</label>
+          <textarea style="width:100%;min-height:120px;padding:12px;border-radius:8px;border:1px solid #eee"></textarea>
+          <div style="margin-top:12px;">
+            <button class="btn primary">Send Message</button>
+          </div>
+        </form>
+
+        <aside style="background:#fff;padding:18px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);">
+          <h3>Support</h3>
+          <p class="muted">Email: support@elevateglobal.example</p>
+          <p class="muted">Phone: +1 (555) 123-4567</p>
+          <p style="margin-top:12px;">Our live chat widget (UI-only) is available on the bottom right — it does not connect to a backend.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="chat-wrap" id="chat-wrap">
+    <div class="chat-panel" role="dialog" aria-label="Live chat">
+      <div class="chat-header">
+        <i class="fas fa-comment-dots"></i> Live Chat
+        <div style="margin-left:auto;font-size:0.9rem;color:var(--text-muted)">Online</div>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="message them"><strong>Agent</strong><div style="font-size:0.95rem;margin-top:6px;">Hi — welcome to Elevate! How can we help today?</div></div>
+      </div>
+      <div class="chat-input">
+        <input id="chat-input" placeholder="Type a message..." />
+        <button id="chat-send" class="btn primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top:60px;">
+    <div class="footer-bottom-bar">
+      <div>&copy; <span id="current-year">2025</span> ELEVATE Global Corp.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const sendBtn = document.getElementById('chat-send');
+      const input = document.getElementById('chat-input');
+      const body = document.getElementById('chat-body');
+
+      sendBtn.addEventListener('click', ()=> {
+        const t = input.value.trim();
+        if(!t) return;
+        const me = document.createElement('div'); me.className='message me'; me.innerHTML = `<div>${t}</div>`;
+        body.appendChild(me);
+        input.value = '';
+        body.scrollTop = body.scrollHeight;
+      
+        setTimeout(()=>{
+          const them = document.createElement('div'); them.className='message them';
+          them.innerHTML = `<strong>Agent</strong><div style="margin-top:6px">Thanks — we received your message. Our team will respond shortly (this is a UI demo).</div>`;
+          body.appendChild(them);
+          body.scrollTop = body.scrollHeight;
+        }, 800);
+      });
+
+      input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); sendBtn.click(); }});
+    });
+  </script>
+</body>
+</html>
