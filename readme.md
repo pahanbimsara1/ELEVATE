@@ -72,7 +72,7 @@ It features a clean UI, smooth animations, dark mode support, responsive layouts
 ⚙️ How to Run
 
 1. Download or clone the project:
-git clone https://github.com/your-repo/elevate.git
+git clone https://github.com/pahanbimsara1/ELEVATE)
 
 yaml
 Copy code
@@ -101,4 +101,5 @@ Developed for modern e-commerce experiences with a focus on speed, design, and u
 ELEVATE — Experience Premium. Live Elevated.
 
 Designed and Developed by Pahan Bimsara President's College Minuwangoda
+
 For PULZ'25 Compeition
